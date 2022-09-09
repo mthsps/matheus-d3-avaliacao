@@ -9,9 +9,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Controller" />
-      <Folder Include="Interface" />
-      <Folder Include="Repository" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="Controller\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="Controller\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Controller\**" />
     </ItemGroup>
 
 </Project>
