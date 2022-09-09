@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using matheus_d3_avaliacao.Model;
+using matheus_d3_avaliacao.Repository;
 
 namespace matheus_d3_avaliacao
 {
@@ -31,28 +32,39 @@ namespace matheus_d3_avaliacao
                         }
                         else
                         {
-                            Console.WriteLine("\nLogin realizado com sucesso. Escolha uma opção abaixo:\n");
-                            Console.WriteLine("1 - Deslogar");
-                            Console.WriteLine("2 - Encerrar");
+                            List<User> users = new UserRepository().GetUsers();
 
-                            string optionLogin;
-                            optionLogin = Console.ReadLine();
-
-                            switch (optionLogin)
+                            if (users.Exists(x => x.Email == email && x.Senha == senha))
                             {
-                                case "1":
-                                    Console.WriteLine("\nDeslogado com sucesso!");
-                                    option = "1";
-                                    break;
-                                case "2":
-                                    option = "2";
-                                    break;
-                                default:
-                                    Console.WriteLine("\nOpção inválida!");
-                                    break;
+                                Console.WriteLine("\nLogin realizado com sucesso. Escolha uma opção abaixo:\n");
+                                Console.WriteLine("1 - Deslogar");
+                                Console.WriteLine("2 - Encerrar");
+
+                                string optionLogin;
+                                optionLogin = Console.ReadLine();
+
+                                switch (optionLogin)
+                                {
+                                    case "1":
+                                        Console.WriteLine("\nDeslogado com sucesso!");
+                                        option = "1";
+                                        break;
+                                    case "2":
+                                        option = "2";
+                                        break;
+                                    default:
+                                        Console.WriteLine("\nOpção inválida!");
+                                        break;
+                                }
                             }
-                        }
+                            else
+                            {
+                                Console.WriteLine("\nE-mail ou senha inválidos!");
+                            }
+                        } 
+
                         break;
+                    
                 }
             } while (option != "2");
             Console.WriteLine("\nSistema encerrado!");

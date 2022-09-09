@@ -29,9 +29,9 @@ public class UserRepository : IUser
                     User user = new User()
                     {
                         Id = rdr["user_id"].ToString(), 
-                        Nome = rdr["name"].ToString(),
+                        Nome = rdr["user_name"].ToString(),
                         Email = rdr["email"].ToString(),
-                        Senha = rdr["password"].ToString(),
+                        Senha = rdr["pass"].ToString(),
                     };
 
                     users.Add(user);
