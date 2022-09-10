@@ -8,6 +8,9 @@ namespace matheus_d3_avaliacao
     {
         static void Main(string[] args)
         {
+            
+            LogRepository logRepository = new LogRepository();
+            
             User user = new();
 
             string option;
@@ -36,6 +39,9 @@ namespace matheus_d3_avaliacao
 
                             if (users.Exists(x => x.Email == email && x.Senha == senha))
                             {
+                                User userLogged = users.Find(x => x.Email == email && x.Senha == senha);
+                                
+                                logRepository.RegisterAccess(userLogged, "in");
                                 Console.WriteLine("\nLogin realizado com sucesso. Escolha uma opção abaixo:\n");
                                 Console.WriteLine("1 - Deslogar");
                                 Console.WriteLine("2 - Encerrar");
@@ -46,6 +52,7 @@ namespace matheus_d3_avaliacao
                                 switch (optionLogin)
                                 {
                                     case "1":
+                                        logRepository.RegisterAccess(userLogged, "out");
                                         Console.WriteLine("\nDeslogado com sucesso!");
                                         option = "1";
                                         break;

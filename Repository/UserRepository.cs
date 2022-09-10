@@ -41,7 +41,6 @@ public class UserRepository : IUser
         return users;
     }
 
-
     public User GetUser(string username, string password)
     {
         throw new NotImplementedException();

@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <None Remove="Controller\**" />
+      <None Remove="Resources\package.json" />
     </ItemGroup>
 
 </Project>
