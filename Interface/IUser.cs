@@ -4,6 +4,8 @@ namespace matheus_d3_avaliacao.Interface;
 
 public interface IUser
 {
-    List<User> GetUsers();
+    
+    public void CreateUser(User user);
     User GetUser(string username, string password);
+    
 }

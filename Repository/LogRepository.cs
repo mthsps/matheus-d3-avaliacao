@@ -1,4 +1,3 @@
-using System.Text;
 using matheus_d3_avaliacao.Interface;
 using matheus_d3_avaliacao.Model;
 
@@ -16,13 +15,13 @@ public class LogRepository : ILog
     private static string PrepareLineSignIn(User user)
     {
         return
-            $"O usuário {user.Nome} acessou o sistema às {DateTimeOffset.Now.ToString("HH:mm")} do dia {DateTimeOffset.Now.ToString("d")}";
+            $"O usuário {user.Name} acessou o sistema às {DateTimeOffset.Now.ToString("HH:mm")} do dia {DateTimeOffset.Now.ToString("dd/MM/yyyy")}.";
     }
     
     private static string PrepareLineLogout(User user)
     {
         return
-            $"O usuário {user.Nome} deslogou do sistema às {DateTimeOffset.Now.ToString("HH:mm")} do dia {DateTimeOffset.Now.ToString("d")}.";
+            $"O usuário {user.Name} deslogou do sistema às {DateTimeOffset.Now.ToString("HH:mm")} do dia {DateTimeOffset.Now.ToString("dd/MM/yyyy")}.";
     }
     
 

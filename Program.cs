@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using matheus_d3_avaliacao.Model;
 using matheus_d3_avaliacao.Repository;
+using matheus_d3_avaliacao.Security;
 
 namespace matheus_d3_avaliacao
 {
@@ -10,15 +11,14 @@ namespace matheus_d3_avaliacao
         {
             
             LogRepository logRepository = new LogRepository();
-            
-            User user = new();
 
             string option;
             do
             {
                 Console.WriteLine("\nEscolha uma das opções abaixo:\n");
                 Console.WriteLine("1 - Logar");
-                Console.WriteLine("2 - Cancelar");
+                Console.WriteLine("2 - Cadastrar");
+                Console.WriteLine("3 - Sair do sistema");
 
                 option = Console.ReadLine();
 
@@ -35,12 +35,13 @@ namespace matheus_d3_avaliacao
                         }
                         else
                         {
-                            List<User> users = new UserRepository().GetUsers();
+                            UserRepository userRepository = new UserRepository();
+                            
+                            senha = Encryption.Encrypt(senha);
+                            User userLogged = userRepository.GetUser(email, senha);
 
-                            if (users.Exists(x => x.Email == email && x.Senha == senha))
+                            if (userLogged.Email == email)
                             {
-                                User userLogged = users.Find(x => x.Email == email && x.Senha == senha);
-                                
                                 logRepository.RegisterAccess(userLogged, "in");
                                 Console.WriteLine("\nLogin realizado com sucesso. Escolha uma opção abaixo:\n");
                                 Console.WriteLine("1 - Deslogar");
@@ -57,7 +58,7 @@ namespace matheus_d3_avaliacao
                                         option = "1";
                                         break;
                                     case "2":
-                                        option = "2";
+                                        option = "3";
                                         break;
                                     default:
                                         Console.WriteLine("\nOpção inválida!");
@@ -66,14 +67,34 @@ namespace matheus_d3_avaliacao
                             }
                             else
                             {
-                                Console.WriteLine("\nE-mail ou senha inválidos!");
+                                Console.WriteLine("\nE-mail ou senha inválidos ou inexistentes!");
                             }
                         } 
 
                         break;
                     
+                    case "2":
+                        User createUser = new();
+                        Console.WriteLine("\nDigite seu nome: ");
+                        createUser.Name = Console.ReadLine();
+                        Console.WriteLine("\nDigite seu e-mail: ");
+                        createUser.Email = Console.ReadLine();
+                        Console.WriteLine("\nDigite sua senha: ");
+                        createUser.Password = Console.ReadLine();
+                        if (createUser.Name == null || createUser.Email == null || !(createUser.Email.Contains("@")) || createUser.Password == null || !(createUser.Password.Length >= 3))
+                        {
+                            Console.WriteLine("\nDados inválidos!");
+                        }
+                        else
+                        {
+                            createUser.Password =  Encryption.Encrypt(createUser.Password);
+                            new UserRepository().CreateUser(createUser);
+                            Console.WriteLine("\nUsuário cadastrado com sucesso!");
+                        }
+                        break;
+                    
                 }
-            } while (option != "2");
+            } while (option != "3");
             Console.WriteLine("\nSistema encerrado!");
             
         }
